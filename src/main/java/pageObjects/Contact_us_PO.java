@@ -4,6 +4,7 @@ package pageObjects;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
+import utils.Global_vars;
 
 
 public class Contact_us_PO extends Base_PO{
@@ -31,7 +32,7 @@ public class Contact_us_PO extends Base_PO{
     }
 
     public void navigateTo_WebDriverUniversity_contact_Us_page(){
-        navitageTo_URL("https://webdriveruniversity.com/Contact-Us/contactus.html");
+        navitageTo_URL(Global_vars.WEBDRIVER_UNIVERSITY_URL+"/Contact-Us/contactus.html");
     }
 
     public void setFirstName_TextField(String firstname) {

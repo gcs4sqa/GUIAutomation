@@ -9,10 +9,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import utils.Global_vars;
 
 import java.time.Duration;
 
-@SuppressWarnings("all")
+
 public class Base_PO {
 
     public Base_PO() {
@@ -36,44 +37,44 @@ public class Base_PO {
     }
 
 public void sendKeys(By by, String textToType){
-    WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+    WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Global_vars.DEFUALT_EXPLICIT_TIMEOUT));
     wait.until(ExpectedConditions.elementToBeClickable(by)).sendKeys(textToType);
 }
 
     public void sendKeys(WebElement element, String textToType){
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Global_vars.DEFUALT_EXPLICIT_TIMEOUT));
         wait.until(ExpectedConditions.elementToBeClickable(element)).sendKeys(textToType);
     }
 
     public void waitForWebElementAndClick(By by){
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Global_vars.DEFUALT_EXPLICIT_TIMEOUT));
         wait.until(ExpectedConditions.elementToBeClickable(by)).click();
     }
 
     public void waitFor(By by){
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Global_vars.DEFUALT_EXPLICIT_TIMEOUT));
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
     }
 
     public void waitFor(WebElement element){
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Global_vars.DEFUALT_EXPLICIT_TIMEOUT));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public void waitForWebElementAndClick(WebElement element){
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Global_vars.DEFUALT_EXPLICIT_TIMEOUT));
         wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 
     public void waitForAlert_And_validateText(String text){
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Global_vars.DEFUALT_EXPLICIT_TIMEOUT));
         wait.until(ExpectedConditions.alertIsPresent());
         String alert_Message_Text = getDriver().switchTo().alert().getText();
         Assert.assertEquals(alert_Message_Text, text);
     }
 
     public void waitForAlert_And_clickOK(){
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(Global_vars.DEFUALT_EXPLICIT_TIMEOUT));
         wait.until(ExpectedConditions.alertIsPresent());
         getDriver().switchTo().alert().accept();
     }
