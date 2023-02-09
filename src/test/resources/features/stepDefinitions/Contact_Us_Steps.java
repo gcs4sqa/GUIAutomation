@@ -5,22 +5,21 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import org.testng.Assert;
 import pageObjects.Base_PO;
+import pageObjects.Contact_us_PO;
 
 
 public class Contact_Us_Steps extends Base_PO {
 
-    private WebDriver driver = getDriver();
+    private final Contact_us_PO contact_us_po;
+
+    public Contact_Us_Steps(Contact_us_PO contact_us_po) {
+        this.contact_us_po = contact_us_po;
+    }
 
     @Given("I access the webdriver university contact us page")
     public void i_access_the_webdriver_university_contact_us_page() {
-        navitageTo_URL("https://webdriveruniversity.com/Contact-Us/contactus.html");
+        contact_us_po.navigateTo_WebDriverUniversity_contact_Us_page();
 
     }
     @When("I enter a first name of {}")
@@ -29,7 +28,8 @@ public class Contact_Us_Steps extends Base_PO {
             firstname = "AutoFN" + generateRandomNumber(5);
             System.out.println(firstname);
         }
-        sendKeys(By.xpath("//input[@name='first_name']"), firstname);
+        //sendKeys(By.xpath("//input[@name='first_name']"), firstname);
+        contact_us_po.setFirstName_TextField(firstname);
 
     }
     @And("I enter a last name of {}")
@@ -37,32 +37,33 @@ public class Contact_Us_Steps extends Base_PO {
         if (lastname.equals("unique")){
             lastname = "AutoLN" + generateRandomNumber(5);
         }
-        sendKeys(By.xpath("//input[@name='last_name']"), lastname);
+        //sendKeys(By.xpath("//input[@name='last_name']"), lastname);
+        contact_us_po.setLastName_TextField(lastname);
     }
     @And("I enter an email address of {}")
     public void i_enter_an_email_address(String email) {
         if (email.equals("unique")){
             email = "AutoEmail" + generateRandomNumber(10)+"@mail.com";
         }
-        sendKeys(By.xpath("//input[@name='email']"), email);
+        //sendKeys(By.xpath("//input[@name='email']"), email);
+        contact_us_po.setEmail_TextField(email);
     }
     @And("I enter a comment of {}")
     public void i_enter_a_comment(String comment) {
         if (comment.equals("unique")){
             comment = "Hello World " + generateRandomString(20);
         }
-        sendKeys(By.xpath("//textarea[@name='message']"), comment);
+        //sendKeys(By.xpath("//textarea[@name='message']"), comment);
+        contact_us_po.setComment_TextField(comment);
+
     }
 
     @And("I click on the submit button")
     public void i_click_on_the_submit_button() {
-        //driver.findElement(By.xpath("//input[@value='SUBMIT']")).click();
-        waitForWebElementAndClick(By.xpath("//input[@value='SUBMIT']"));
+        contact_us_po.clickOn_SubmitButton();
     }
     @Then("I should be presented with a successful contact us submission message")
     public void i_should_be_presented_with_a_successful_contact_us_submission_message() {
-        //WebElement contactUs_Submission_Message = driver.findElement(By.xpath("//div[@id='contact_reply']/h1"));
-        WebElement contactUs_Submission_Message = driver.findElement(By.xpath("//div[@id='contact_reply']/h1"));
-        Assert.assertEquals(contactUs_Submission_Message.getText(), "Thank You for your Message!");
+        contact_us_po.validate_successful_Submission_Message();
     }
 }

@@ -5,15 +5,18 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.time.Duration;
 
+@SuppressWarnings("all")
 public class Base_PO {
 
     public Base_PO() {
-
+        PageFactory.initElements(getDriver(), this);
     }
 
     public WebDriver getDriver(){
@@ -47,11 +50,32 @@ public void sendKeys(By by, String textToType){
         wait.until(ExpectedConditions.elementToBeClickable(by)).click();
     }
 
+    public void waitFor(By by){
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+    }
+
+    public void waitFor(WebElement element){
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
     public void waitForWebElementAndClick(WebElement element){
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 
+    public void waitForAlert_And_validateText(String text){
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.alertIsPresent());
+        String alert_Message_Text = getDriver().switchTo().alert().getText();
+        Assert.assertEquals(alert_Message_Text, text);
+    }
 
+    public void waitForAlert_And_clickOK(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.alertIsPresent());
+        getDriver().switchTo().alert().accept();
+    }
 
 }
